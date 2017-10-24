@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %}
+<!--{% block content %}
     <h1>Get It Done!</h1>
     <form method='post'>
         <label>
@@ -10,16 +10,16 @@
         <input type="submit" value='Add Task' />
     </form>
 
-    <hr />
+    <hr /> -->
 
-<!--    {% if tasks|length == 0 %}
-    <p>No tasks yet</p>
+    {% if tasks|length == 0 %}
+    <p>No Posts yet</p>
     {% else %}
 
         <ul>
             {% for task in tasks %}
-            <li>{{task.name}}
-                <form action = "/delete-task" method = "POST" style="display:inline-block;">
+            <li>{{task.name}} #blog names, blog bodies etc.
+                <form action = "/blog" method = "POST" style="display:inline-block;">
                     <input type="hidden" name="task-id" value={{task.id}}" />
                     <input type="submit" value="Done!" />
                 </form>
@@ -29,5 +29,5 @@
             {% endfor %}
         </ul>
 
-    {% endif %} -->
+    {% endif %}
 {% endblock %}

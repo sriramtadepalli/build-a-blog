@@ -5,14 +5,15 @@
     <form method='post'>
         <label>
             New Task:
-            <input type="text" name='task' />
+            <input type="text" name='title' />
+            <input type="text" name='body' />
         </label>
         <input type="submit" value='Add Task' />
     </form>
 
     <hr />
 
-    {% if tasks|length == 0 %}
+   <!-- {% if tasks|length == 0 %}
     <p>No tasks yet</p>
     {% else %}
 
@@ -27,7 +28,7 @@
 
             </li>
             {% endfor %}
-        </ul>
+        </ul> 
 
-    {% endif %}
+    {% endif %} -->
 {% endblock %}
