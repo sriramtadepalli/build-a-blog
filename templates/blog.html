@@ -1,16 +1,10 @@
 {% extends "base.html" %}
 
 <!--{% block content %}
-    <h1>Get It Done!</h1>
-    <form method='post'>
-        <label>
-            New Task:
-            <input type="text" name='task' />
-        </label>
-        <input type="submit" value='Add Task' />
-    </form>
+    <h1>Build a Blog</h1>
+    
 
-    <hr /> -->
+    <hr />
 
     <!--task_id = int(request.form['task-id'])
     task = task.query.get(task_id) -->     
@@ -24,12 +18,7 @@
 
             <li><a href="/blog?id={{blog.id}}">{{blog.title}}</a>{{blog.body}}
    
-              <!--      <input type="hidden" name="blog_id" value="{{blog.id}}" />
-                 
-                    <input type="submit" value="{{blog.title}}" />
-
-                    <h4>{{blog.body}}</h4> -->
-            
+              
 
 
             </li>

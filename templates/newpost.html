@@ -1,14 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Build a Blog List of Blogs!</h1>
+    <h1>Build a Blog</h1>
     <form method='post'>
         <label>
-            New Task:
-            <input type="text" name='title' /> <!-- Text area instead of text box -->
+            New Blog Post:
+            <input type="text" name='title' /> 
+            <p class="error">{{title_error}}</p>            
             <input type="text" name='body' />
+            <p class="error">{{body_error}}</p>
         </label>
-        <input type="submit" value='Add Task' />
+        <input type="submit" value='Submit Log Entry' />
+
+
     </form>
 
     <hr />
