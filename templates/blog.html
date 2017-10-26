@@ -12,17 +12,24 @@
 
     <hr /> -->
 
-    {% if tasks|length == 0 %}
+    <!--task_id = int(request.form['task-id'])
+    task = task.query.get(task_id) -->     
+
+    {% if blogs|length == 0 %}
     <p>No Posts yet</p>
     {% else %}
 
         <ul>
-            {% for task in tasks %}
-            <li>{{task.name}} #blog names, blog bodies etc.
-                <form action = "/blog" method = "POST" style="display:inline-block;">
-                    <input type="hidden" name="task-id" value={{task.id}}" />
-                    <input type="submit" value="Done!" />
-                </form>
+            {% for blog in blogs %}
+
+            <li><a href="/blog?id={{blog.id}}">{{blog.title}}</a>{{blog.body}}
+   
+              <!--      <input type="hidden" name="blog_id" value="{{blog.id}}" />
+                 
+                    <input type="submit" value="{{blog.title}}" />
+
+                    <h4>{{blog.body}}</h4> -->
+            
 
 
             </li>

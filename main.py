@@ -31,22 +31,27 @@ def index():
         db.session.add(newpost)
         db.session.commit()
 
-        blogs = Blog.query.all()
-        return render_template('blog.html', blogs=blogs)
+        return redirect("/blog")
 
     return render_template('newpost.html',title="Build a Blog")
 
 
-@app.route('/blog', methods=['POST'])
+@app.route('/blog', methods=['GET'])
 def blog():
+ 
+    id = request.args.get("id")
 
-    task_id = int(request.form['task-id'])
-    task = Task.query.get(task_id)
+    if id:
 
-    db.session.add(task)
-    db.session.commit()
+        blog_var =  Blog.query.filter_by(id = id)
 
-    return redirect('/newpost')
+        return render_template('blog_post.html',title="Build a Blog", blog = blog_var)
+
+    else:
+
+        blogs = Blog.query.all()
+        return render_template('blog.html', blogs=blogs)
+
 
 
 if __name__ == '__main__':
