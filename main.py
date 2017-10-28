@@ -35,13 +35,36 @@ class User(db.Model):
         self.password = password
 
 
+@app.before_request
+def require_login():
+    allowed_routes = ['login', 'register']
+    if request.endpoint not in allowed_routes and 'email' not in session:
+        return redirect('/login')
+
+@app.route('/login', methods = ['POST', 'GET'] )
+def login():
+    if request.method = 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
+        if user and user.password == password:
+            session['username'] = username
+            flash("Logged in")
+            return redirect('/newpost')
+        else:
+            flash('User password incorrect, or user does not exist', 'error')
+    
+    return render_template('login.html')
+
 @app.route('/newpost', methods=['POST', 'GET'])
 def index():
 
     if request.method == 'POST':
         title_name = request.form['title']
         body_name = request.form['body']
-        owner_id_name = request.form['owner']  # Get owner from your session instead of owner field that doesen't exist.
+        owner = User.query.filter_by(username=username).first() # Get owner from your session instead of owner field that doesen't exist.
+
+        
 
         if not title_name or not body_name:
             return render_template('newpost.html',title_error="The title is empty.", body_error = "The body is empty.")            
