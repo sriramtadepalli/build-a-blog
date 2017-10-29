@@ -6,7 +6,7 @@ app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:blogz@localhost:8889/blogz'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
-
+app.secret_key = "blogz"
 
 class Blog(db.Model):
 
@@ -71,7 +71,8 @@ def signup():
         verify = request.form['verify']
 
         if not username or len(username) > 3 or len(username) > 20:
-            flash("Invalid username", "error")
+            flash("error:Invalid username")
+            # flash("Invalid username", "error")
 
         elif not password or len(password) > 3 or len(password) > 20:
             flash("Invalid password", "error")
