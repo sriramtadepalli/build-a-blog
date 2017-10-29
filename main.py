@@ -13,7 +13,7 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     body = db.Column(db.String(200))
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
     def __init__(self, title, body): 
@@ -46,7 +46,7 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = User.query.filter_by(username=session['username']).first()
+        user = User.query.filter_by(username=username).first()
         if user and user.password == password:
             session['username'] = username
             flash("Logged in")
@@ -69,30 +69,26 @@ def signup():
         username = request.form['username']
         password = request.form['password']
         verify = request.form['verify']
+        existing_user = User.query.filter_by(username=username).first()
 
-        if not username or len(username) > 3 or len(username) > 20:
+        if existing_user or not username or len(username) < 3 or len(username) > 20:
             flash("error:Invalid username")
             # flash("Invalid username", "error")
 
-        elif not password or len(password) > 3 or len(password) > 20:
+        elif not password or len(password) < 3 or len(password) > 20:
             flash("Invalid password", "error")
 
 
         elif password != verify:
             flash("Not a valid password", "error")
 
-        else:
-            existing_user = User.query.filter_by(username=username).first()
-
-            if existing_user:
-                flash("User already exists", "error")
             
-            else:
-                new_user = User(username, password)
-                db.session.add(new_user)
-                db.session.commit()
-                session['username'] = username
-                return redirect('/newpost')
+        else:
+            new_user = User(username, password)
+            db.session.add(new_user)
+            db.session.commit()
+            session['username'] = username
+            return redirect('/newpost')
 
     return render_template('signup.html')
 
@@ -107,14 +103,14 @@ def index():
     if request.method == 'POST':
         title_name = request.form['title']
         body_name = request.form['body']
-        owner = User.query.filter_by(username=session['username']).first() # Get owner from your session instead of owner field that doesen't exist.
+        owner = User.query.filter_by(username=username).first() # Get owner from your session instead of owner field that doesen't exist.
 
         
 
         if not title_name or not body_name:
             return render_template('newpost.html',title_error="The title is empty.", body_error = "The body is empty.")            
 
-        newpost = Blog(title_name, body_name, owner_id_name)
+        newpost = Blog(title_name, body_name, owner)
         db.session.add(newpost)
         db.session.commit()
 
