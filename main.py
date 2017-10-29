@@ -50,11 +50,18 @@ def login():
         if user and user.password == password:
             session['username'] = username
             flash("Logged in")
-            return redirect('/newpost')
+            #return redirect('/newpost')
+            # return render_template('login.html')
+
         else:
             flash('User password incorrect, or user does not exist', 'error')
+
+    if request.method == 'GET':
+        pass
+        # return render_template('login.html')
+
     
-   #return render_template('login.html')
+    return render_template('/login.html')
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
