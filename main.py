@@ -14,7 +14,7 @@ class Blog(db.Model):
     title = db.Column(db.String(120))
     body = db.Column(db.String(200))
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
+    
 
     def __init__(self, title, body, owner): 
         self.title = title
@@ -26,7 +26,10 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(200))
-    blogs = db.relationship('Blog', backref='owner')    
+    blogs = db.relationship('Blog', backref='owner')   
+    
+    
+    
     #blogs
 
 
@@ -126,15 +129,27 @@ def blog():
     id = request.args.get("id")
 
     if id:  
-
-        print("In Id................... id.....")
+    
 
         blog_var =  Blog.query.filter_by(id=id).first()
         #blog_var = Blog.query.get(id=id)
 
-        print("The id we got from the database is ", blog_var)
+        #GET USERNAME FROM THE ID.
 
-        return render_template('blog_post.html',title="Build a Blog", blog_var = blog_var)
+        #username_var = Blog.query.filter_by(owner_id=username).first()
+        print(blog_var)
+
+        print(blog_var.id)
+
+        print(blog_var.title)
+
+        print(blog_var.body)
+
+        print(blog_var.owner_id)
+
+        user = User.query.filter_by(id=blog_var.owner_id).first()
+
+        return render_template('blog_post.html',title="Build a Blog", blog_var = blog_var, user = user)
 
     else:
 

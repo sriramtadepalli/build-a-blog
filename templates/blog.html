@@ -16,12 +16,23 @@
         <ul>
             {% for blog in blogs %}
 
-            <li><a href="/blog?id={{blog.id}}">{{blog.title}}</a>{{blog.body}}
-   
-              
+            <li><a href="/blog?id={{blog.id}}">{{blog.title}} </a>{{blog.body}} </li>
+            
+            <!--<li><a href="{{username_var}}">{{username_var}}</a> -->
+                
+            <li><a href="{{user.username}}">  
+                {% for blog in blogs %}
+
+                <li><a href="/blog?id={{blog.id}}">{{blog.title}} </a>{{blog.body}} </li>
+
+                {% endfor %}
+
+            </a>
+            
+            </li>  
 
 
-            </li>
+            
             {% endfor %}
         </ul>
 
