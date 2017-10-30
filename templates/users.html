@@ -1,43 +1,16 @@
 {% extends "base.html" %}
 
-<!--{% block content %}
-    <h1>Build a Blog</h1>
-    
+{% block content %}
+  
 
-    <hr />
-
-    <!--task_id = int(request.form['task-id'])
-    task = task.query.get(task_id) -->     
-
-    {% if blogs|length == 0 %}
-    <p>No Posts yet</p>
+    {% if users|length == 0 %}
+    <p>No Users yet</p>
     {% else %}
 
         <ul>
             {% for user in users %}
 
-            <li><a href="/blog?id={{blog.id}}">{{user.username}} </a> </li>
-            
-            <!--<li><a href="{{username_var}}">{{username_var}}</a> -->
-
-            <!--BEN PETERS -  Reference the blog to find out who wrote it and print out the name -->
-
-                
-                
-            <!--<li><a href="{{user.username}}"> </li> -->
-
-
-             <!--   {% for blog in blogs %}
-
-                <li><a href="/blog?id={{blog.id}}">{{blog.title}} </a>{{blog.body}} </li>
-
-                {% endfor %}  
-
-            </a> </li> -->
-            
-              
-
-
+            <li><a href="/blog?userid={{user.id}}">{{user.username}} </a> </li>
             
             {% endfor %}
         </ul>

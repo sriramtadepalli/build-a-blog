@@ -137,6 +137,7 @@ def newpost():
 def blog():
  
     id = request.args.get("id")
+    userid = request.args.get("userid")
 
     if id:  
     
@@ -166,9 +167,13 @@ def blog():
 
         return render_template('blog_post.html',title="Build a Blog", blog_var = blog_var, user = user)
 
+    elif userid:
+
+        user_blogs = Blog.query.filter_by(owner_id=userid).all()
+        return render_template('blog.html', blogs=user_blogs)
     else:
-        blog_var =  Blog.query.filter_by(id=id).first()
-        user = User.query.filter_by(id=blog_var.owner_id).first()
+    #    blog_var =  Blog.query.filter_by(id=id).first()
+    #    user = User.query.filter_by(id=blog_var.owner_id).first()
         blogs = Blog.query.all()
         return render_template('blog.html', blogs=blogs)
 
