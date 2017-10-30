@@ -38,11 +38,21 @@ class User(db.Model):
         self.password = password
 
 
+
+
 @app.before_request
 def require_login():
     allowed_routes = ['login', 'signup']
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
+
+@app.route('/', methods = ['GET'])
+def index():
+
+    users = User.query.all()
+    return render_template('users.html', users=users)
+
+
 
 @app.route('/login', methods = ['POST', 'GET'] )
 def login():
@@ -101,7 +111,7 @@ def logout():
     return redirect('/newpost')
 
 @app.route('/newpost', methods=['POST', 'GET'])
-def index():
+def newpost():
 
     owner = User.query.filter_by(username=session['username']).first()
     if request.method == 'POST':
@@ -137,6 +147,9 @@ def blog():
         #GET USERNAME FROM THE ID.
 
         #username_var = Blog.query.filter_by(owner_id=username).first()
+
+        print("HELLO WORLD HOW ARE YOU TODAY?")
+
         print(blog_var)
 
         print(blog_var.id)
@@ -149,10 +162,13 @@ def blog():
 
         user = User.query.filter_by(id=blog_var.owner_id).first()
 
+        #print(user.username)
+
         return render_template('blog_post.html',title="Build a Blog", blog_var = blog_var, user = user)
 
     else:
-
+        blog_var =  Blog.query.filter_by(id=id).first()
+        user = User.query.filter_by(id=blog_var.owner_id).first()
         blogs = Blog.query.all()
         return render_template('blog.html', blogs=blogs)
 
