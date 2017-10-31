@@ -14,6 +14,7 @@ class Blog(db.Model):
     title = db.Column(db.String(120))
     body = db.Column(db.String(200))
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner = db.relationship('User')
     
 
     def __init__(self, title, body, owner): 
@@ -26,7 +27,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(200))
-    blogs = db.relationship('Blog', backref='owner')   
+    blogs = db.relationship('Blog')   
     
     
     
@@ -42,7 +43,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'signup']
+    allowed_routes = ['login', 'signup', 'index', 'logout', 'blog']
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
